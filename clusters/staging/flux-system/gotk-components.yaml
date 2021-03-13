@@ -2453,6 +2453,8 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: temp
+      imagePullSecrets:
+      - name: regcred
       nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: helm-controller
@@ -2525,6 +2527,8 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: temp
+      imagePullSecrets:
+      - name: regcred
       nodeSelector:
         kubernetes.io/os: linux
       securityContext:
@@ -2602,6 +2606,8 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: temp
+      imagePullSecrets:
+      - name: regcred
       nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: notification-controller
@@ -2681,6 +2687,8 @@ spec:
           name: data
         - mountPath: /tmp
           name: tmp
+      imagePullSecrets:
+      - name: regcred
       nodeSelector:
         kubernetes.io/os: linux
       securityContext:
