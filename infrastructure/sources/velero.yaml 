@@ -3,5 +3,5 @@ kind: HelmRepository
 metadata:
   name: velero
 spec:
-  interval: 5m
+  interval: 1m
   url: https://vmware-tanzu.github.io/helm-charts
