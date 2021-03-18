@@ -4,4 +4,4 @@ namespace: flux-system
 resources:
   - bitnami.yaml
   - podinfo.yaml
-  - velero.yaml 
+  # - velero.yaml 
