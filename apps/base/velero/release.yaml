@@ -1,27 +1,35 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: podinfo
-  namespace: podinfo
+  name: velero
+  namespace: velero
 spec:
-  releaseName: podinfo
+  releaseName: velero
   chart:
     spec:
-      chart: podinfo
+      chart: velero
       sourceRef:
         kind: HelmRepository
-        name: podinfo
+        name: velero
         namespace: flux-system
-  interval: 5m
+  interval: 1m
   install:
     remediation:
-      retries: 3
+      retries: 50
   # Default values
   # https://github.com/stefanprodan/podinfo/blob/master/charts/podinfo/values.yaml
   values:
-    cache: redis-master.redis:6379
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-      path: "/"
+    updateStrategy: RollingUpdate
+    image:
+      repository: velero/velero
+      tag: v1.5.3
+    initContainers:
+    - name: velero-plugin-for-microsoft-azure
+      image: velero/velero-plugin-for-microsoft-azure:v1.1.1
+      volumeMounts:
+      - name: plugins
+        mountPath: /target
+      - name: cloud-credentials
+        mountPath: /credentials
+      - name: scratch
+        mountPath: /scratch

@@ -1,29 +1,34 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+---
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: velero
   namespace: velero
+  annotations:
+    fluxcd.io/ignore: "true"
 spec:
+  releaseName: velero
+  helmVersion: v3
+  targetNamespace: velero
   chart:
-    spec:
-      version: "2.14.4"
-  test:
-    enable: false
+    repository: https://vmware-tanzu.github.io/helm-charts
+    name: velero
+    version: 2.14.4
   values:
-    # updateStrategy: RollingUpdate
-    # image:
-    #   repository: velero/velero
-    #   tag: v1.5.3
-    # initContainers:
-    # - name: velero-plugin-for-microsoft-azure
-    #   image: velero/velero-plugin-for-microsoft-azure:v1.1.1
-    #   volumeMounts:
-    #   - name: plugins
-    #     mountPath: /target
-    #   - name: cloud-credentials
-    #     mountPath: /credentials
-    #   - name: scratch
-    #     mountPath: /scratch
+    updateStrategy: RollingUpdate
+    image:
+      repository: velero/velero
+      tag: v1.5.3
+    initContainers:
+    - name: velero-plugin-for-microsoft-azure
+      image: velero/velero-plugin-for-microsoft-azure:v1.1.1
+      volumeMounts:
+      - name: plugins
+        mountPath: /target
+      - name: cloud-credentials
+        mountPath: /credentials
+      - name: scratch
+        mountPath: /scratch
     configuration:
       provider: azure
       backupStorageLocation:

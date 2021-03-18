@@ -3,6 +3,4 @@ kind: Kustomization
 namespace: velero
 resources:
   - namespace.yaml
-  # - secret.yaml 
-  # - BackupStorageLocation.yaml
   - release.yaml
